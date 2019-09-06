@@ -5,7 +5,7 @@ import Home from '../views/home.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'history', // hash
   base: process.env.BASE_URL,
   routes: [
     {
