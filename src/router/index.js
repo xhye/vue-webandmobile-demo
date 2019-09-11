@@ -4,54 +4,68 @@ import Home from '../views/home.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   mode: 'history', // hash
   base: process.env.BASE_URL,
   routes: [
+    { path: '*', redirect: '/' },
     {
       path: '/',
       name: 'home',
       component: Home,
+      meta: { title: '首页', keepAlive: true },
+      // beforeEnter (to, from, next) {
+      //   const accessToken = localStorage.getItem('ACCESS_TOKEN')
+      //   if (!accessToken || !/\S/.test(accessToken)) {
+      //     localStorage.removeItem('ACCESS_TOKEN')
+      //     next('/')
+      //   }
+      //   next()
+      // },
       children: [
         {
-          path: '/web',
-          name: 'web',
+          path: '/demo',
+          name: 'demo',
+          redirect: '/demo/apply',
           // route level code-splitting
           // this generates a separate chunk (about.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ '../views/web/index.vue')
-        },
-        {
-          path: '/mobile',
-          name: 'mobile',
-          redirect: '/mobile/apply',
-          component: () => import('../views/mobile/index.vue'),
+          component: () => import(/* webpackChunkName: "about" */ '../views/modules/demo/index.vue'),
           children: [
             {
-              path: '/mobile/apply',
+              path: '/demo/apply',
               name: 'apply',
-              meta: { title: '审批' },
-              component: () => import('../views/mobile/tabs/apply/index.vue')
+              meta: { title: '审批', keepAlive: true },
+              component: () => import('../views/modules/demo/menus/apply/index.vue')
             },
             {
-              path: '/mobile/report',
-              meta: { title: '汇报' },
+              path: '/demo/report',
+              meta: { title: '汇报', keepAlive: true },
               name: 'report',
-              component: () => import('../views/mobile/tabs/report/index.vue')
+              component: () => import('../views/modules/demo/menus/report/index.vue')
             }
           ]
         },
         {
-          path: '/mobile/apply/leave',
+          path: '/demo/apply/leave',
           name: 'leave',
-          component: () => import('../views/mobile/tabs/apply/leave/index.vue')
-        },
-        {
-          path: '/mobile/apply/test',
-          name: 'test',
-          component: () => import('../views/mobile/tabs/apply/test/index.vue')
+          meta: { title: '请假' },
+          component: () => import('../views/modules/demo/menus/apply/leave/index.vue')
         }
       ]
-    }
+    },
   ]
 })
+/**
+ * 路由前置守卫
+ */
+router.beforeEach((to, from, next) => {
+  const accessToken = to.query['access_token'] || to.query['ACCESS_TOKEN']
+  accessToken && localStorage.setItem('ACCESS_TOKEN', accessToken)
+  console.log('to', to)
+  // if(to.path === '/') {
+  //
+  // }
+  next()
+})
+export default router

@@ -8,7 +8,7 @@ export default {
    * 获取JSSDK配置
    * @returns {*}
    */
-  geJSSDKConfig (url, isAgent = false) {
-    return req.get(`/wechat_jssdk/config?url=${url}&isAgent=${isAgent}`)
+  geJSSDKConfig (url, noncestr, timestamp, isAgent = false) {
+    return req.get(`/wechat_jssdk/config?url=${url}&nonceStr=${noncestr}&timestamp=${timestamp}&isAgent=${isAgent}`)
   }
 }
