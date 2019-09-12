@@ -37,10 +37,11 @@
 </template>
 
 <script>
-
+  import global from '@mixin/global'
   export default {
     name: 'layout',
     components: {},
+    mixins: [global],
     data() {
       return {
         active: 0
@@ -49,9 +50,6 @@
     computed: {
       screenWidth () {
         return this.environment.isPc ? 15 : 5
-      },
-      environment () {
-        return this.$global.data.environment ? this.$global.data.environment: this.$utils.environment.checkRunEnvironment()
       }
     },
 

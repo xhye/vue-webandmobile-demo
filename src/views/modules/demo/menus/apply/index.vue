@@ -28,8 +28,6 @@ export default {
   },
   mounted() {
     //本页面调用的jssdk Api
-    console.log('this.$global.data.userId', this.$global.data.userId)
-    console.log('localStorage.getItem("userId")', localStorage.getItem("userId"))
     // const jsApi = ['getLocation', 'openLocation']
     // this.$utils.environment.QYJSSDKConfig(jsApi, this.configSuccess) // 初始化js sdk
   },

@@ -6,7 +6,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import api from './api'
 import utils from './utils'
-import Vant from 'vant';
+import VantUI from 'vant';
 import 'vant/lib/index.css';
 import global from './global/index'
 Vue.prototype.$global = global
@@ -22,13 +22,10 @@ const i18n = new VueI18n({
   }
 })
 Vue.use(ElementUI); // 使用ElementUI
-Vue.use(Vant); // 使用Vant
+Vue.use(VantUI); // 使用Vant
 Vue.config.productionTip = false
 Vue.prototype.$api = api // 全局Api
 Vue.prototype.$utils = utils // 全局Util
-router.afterEach(to => {
-  document.title = to.meta.title || '你真好真是个大沙雕'
-})
 new Vue({
   router,
   store,

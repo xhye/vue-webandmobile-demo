@@ -9,7 +9,7 @@ export default class Environment {
    * 检查运行环境 是不是移动端
    * @returns {*}
    */
-  static async checkEnvironment() {
+  static checkEnvironment() {
     const mobileAgent = ['iphone', 'ipod', 'ipad', 'android', 'mobile', 'blackberry', 'webos', 'incognito', 'webmate', 'bada', 'nokia', 'lg', 'ucweb', 'skyfire']
     const browser = navigator.userAgent.toLowerCase()
     let isMobile = false
@@ -27,7 +27,7 @@ export default class Environment {
    * 检查运行环境 pc 手机 平板
    * @returns {*}
    */
-  static async checkRunEnvironment() {
+  static checkRunEnvironment() {
     const ua = navigator.userAgent,
       isWindowsPhone = /(?:Windows Phone)/.test(ua),
       isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
@@ -44,7 +44,6 @@ export default class Environment {
       isPhone: isIPhone || isSymbian || _isAndroid,
       isPc: isPc
     }
-    console.log('environment', result)
     return result
   }
 
@@ -115,5 +114,30 @@ export default class Environment {
       callBack(false)
     }
     wx.config(config)
+  }
+
+  /**
+   * 关闭当前浏览窗口
+   * @returns {Promise<void>}
+   * @constructor
+   */
+  static closeWebPage() {
+    if (navigator.userAgent.indexOf("MSIE") > 0) {
+      if (navigator.userAgent.indexOf("MSIE 6.0") > 0) {
+        window.opener = null; window.close();
+      }
+      else {
+        window.open('', '_top'); window.top.close();
+      }
+    }
+    else if (navigator.userAgent.indexOf("Firefox") > 0) {
+      window.location.href = 'about:blank '; //火狐默认状态非window.open的页面window.close是无效的
+      //window.history.go(-2);
+    }
+    else {
+      window.opener = null;
+      window.open('', '_self', '');
+      window.close();
+    }
   }
 }

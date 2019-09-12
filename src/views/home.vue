@@ -10,15 +10,12 @@
 </template>
 
 <script>
+  import global from '@mixin/global'
   export default {
     name: 'home',
+    mixins: [global],
     data() {
       return {
-        environment: { // 用户使用环境 默认 防止报错
-          isTablet: false,
-          isPhone: false,
-          isPc: false
-        },
         isQYWeixin: false, // 判断是否在企业微信客户端打开
         showQYWXLoginCode: false // 显示扫码登陆容器
       }
@@ -35,48 +32,43 @@
       const userId = localStorage.getItem("userId") // 缓存
       // const localCode = localStorage.getItem("code")
       // const openId = localStorage.getItem("openId")
-      if (this.environment.isPc && !this.isQYWeixin) { // 电脑端打开
-        if (code) {
-          this.codeToUser(code)
-        } else {
-          if(userId) { // 有用户 正常跳转  而且还需要检查测登录状态 暂时没写检测登录状态
-            this.go() // 正常访问
-          } else { // 获取当前用户
-            this.showQYWXLoginCode = true // 显示扫码登陆容器
-            const url = `${window.location.href}`
-            // const url = encodeURIComponent('it-rose-test.club')
-            window.WwLogin({
-              "id" : "QYWXLogin",
-              "appid" : "ww4783b5de3fda6acd",
-              "agentid" : "1000002",
-              "redirect_uri" : url,
-              "state" : "test WwLogin",
-              "href" : "",
-            });
-          }
-        }
-      } else if (this.isQYWeixin) { // 企业微信打开 不分pc 移动
-        if (code) {
-          this.codeToUser(code)
-        } else {
-          if(userId) { // 有用户 正常跳转
-            this.go() // 正常访问
-          } else { // 获取当前用户
-            this.$global.data.url = await this.$utils.auth.generateAuthUrl()  // 构造授权域名
-            window.location.href = this.$global.data.url // 开始授权
-          }
-        }
-      } else {
-        this.$confirm('请在企业微信客户端打开', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '测试通道',
-          type: 'warning'
-        }).then(() => {
-          window.close()
-        }).catch(() => {
-          this.go()
-        });
-      }
+
+      this.go()
+
+      // if (this.environment.isPc && !this.isQYWeixin) { // 电脑端打开
+      //   if (code) {
+      //     this.codeToUser(code)
+      //   } else {
+      //     if(userId) { // 有用户 正常跳转  而且还需要检查测登录状态 暂时没写检测登录状态
+      //       this.go() // 正常访问
+      //     } else { // 获取当前用户
+      //       this.showQYWXLoginCode = true // 显示扫码登陆容器
+      //       const url = `${window.location.href}`
+      //       // const url = encodeURIComponent('it-rose-test.club')
+      //       window.WwLogin({
+      //         "id" : "QYWXLogin",
+      //         "appid" : "ww4783b5de3fda6acd",
+      //         "agentid" : "1000002",
+      //         "redirect_uri" : url,
+      //         "state" : "test WwLogin",
+      //         "href" : "",
+      //       });
+      //     }
+      //   }
+      // } else if (this.isQYWeixin) { // 企业微信打开 不分pc 移动
+      //   if (code) {
+      //     this.codeToUser(code)
+      //   } else {
+      //     if(userId) { // 有用户 正常跳转
+      //       this.go() // 正常访问
+      //     } else { // 获取当前用户
+      //       this.$global.data.url = await this.$utils.auth.generateAuthUrl()  // 构造授权域名
+      //       window.location.href = this.$global.data.url // 开始授权
+      //     }
+      //   }
+      // } else {
+      //   await this.$router.push({path: '/error', query: {msg: "请在企业微信客户端或PC浏览器打开。"}}) // 跳转错误页面
+      // }
     },
 
     methods: {

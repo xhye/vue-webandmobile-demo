@@ -9,6 +9,7 @@ const router =  new Router({
   base: process.env.BASE_URL,
   routes: [
     { path: '*', redirect: '/' },
+    { path: '/error', name: 'error', meta: { title: '错误' } , component: () => import(/* webpackChunkName: "about" */ '../views/common/error/index.vue') },
     {
       path: '/',
       name: 'home',
@@ -67,5 +68,11 @@ router.beforeEach((to, from, next) => {
   //
   // }
   next()
+})
+/**
+ * 路由后置守卫
+ */
+router.afterEach(to => { // 设置网页标题
+  document.title = to.meta.title || '你真好 真是个大沙雕'
 })
 export default router

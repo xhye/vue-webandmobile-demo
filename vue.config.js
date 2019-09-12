@@ -2,7 +2,7 @@ const path = require('path');
 const setPath = folderName => path.join(__dirname, folderName);
 module.exports = {
   productionSourceMap: false,
-  devServer: {
+  devServer: { // 开发代理
     port: 80,
     disableHostCheck: true,
     proxy: {
@@ -15,10 +15,13 @@ module.exports = {
       }
     }
   },
-  configureWebpack: {
+  configureWebpack: { // webpack 配置
     resolve: {
-      alias: {
-        '@': setPath('src')
+      alias: { // 简化文件路径
+        '@': setPath('src'),
+        '@mixin': setPath('src/mixins'),
+        '@components': setPath('src/components'),
+        '@utils': setPath('src/utils')
       }
     }
   }
