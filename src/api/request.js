@@ -16,7 +16,7 @@ request.interceptors.response.use(response => response, error => {
   const { status } = error.response
   if (status && status === 401) {
     localStorage.removeItem('ACCESS_TOKEN')
-    router.push({ path: '/login' })
+    router.push({ path: '/' }) // 路由向到首页 进行授权
   }
   return Promise.reject(error)
 })

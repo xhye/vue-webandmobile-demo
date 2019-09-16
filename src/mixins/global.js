@@ -8,7 +8,8 @@ const mixin = {
       environment: { // 用户使用环境 默认 防止报错
         isTablet: false, // 是否平板
         isPhone: false, // 是否手机  包括安卓 苹果 手机企业微信客户端
-        isPc: false // 是否电脑浏览器 包括电脑企业微信客户端你
+        isPc: false, // 是否电脑浏览器 包括电脑企业微信客户端你
+        isQYWeixin: false // 是否企业微信
       }
     }
   },

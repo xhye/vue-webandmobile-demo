@@ -42,7 +42,8 @@ export default class Environment {
     const result =  {
       isTablet: isTablet,
       isPhone: isIPhone || isSymbian || _isAndroid,
-      isPc: isPc
+      isPc: isPc,
+      isQYWeixin: this.isQYWeixin()
     }
     return result
   }

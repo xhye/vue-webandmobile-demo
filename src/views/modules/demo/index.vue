@@ -1,11 +1,11 @@
 <template>
   <el-container class="home">
-    <el-header :class="{ hidden: !environment.isPc }"
+    <el-header :class="{ hidden: !environment.isPc&&!environment.isQYWeixin }"
                style="margin-bottom: 20px;display: flex;align-items: center;justify-content: center;background-color: gray">
       我就是一个头
     </el-header>
     <el-container>
-      <el-aside width="200px" :class="{ hidden: !environment.isPc }">
+      <el-aside width="200px" :class="{ hidden: !environment.isPc&&!environment.isQYWeixin }">
         <el-menu default-active="1"
                  :router="true"
                  class="el-menu-vertical-demo"
@@ -27,7 +27,7 @@
         </div>
       </el-main>
     </el-container>
-    <el-footer :class="{ hidden: environment.isPc }" class="mobile-menus" height="50">
+    <el-footer :class="{ hidden: environment.isPc&&!environment.isQYWeixin }" class="mobile-menus" height="50">
       <van-tabbar v-model="active">
         <van-tabbar-item icon="home-o" to="/demo/apply">审批</van-tabbar-item>
         <van-tabbar-item icon="search" to="/demo/report">汇报</van-tabbar-item>
